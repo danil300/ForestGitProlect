@@ -1,14 +1,26 @@
+using System.Collections;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class PlayerController : MonoBehaviour
 {
     //—пециально дл€ јлександра по€снил, что здесь да как. ”дачи пон€ть!
-    //ћетод Mathf в c# считаетс€ методом сложной трЄхмерной алгебры, в орсенале лежат вещи из профильной математики, поэтому не удивл€йс€ если что-то не пон€тно, € посторалс€ объ€снить но € сам особо за этот метод не щарю
+    //ћетод Mathf в c# считаетс€ методом сложной трЄхмерной алгебры, в орсенале лежат вещи из профильной математики, поэтому не удивл€йс€ если что-то не пон€тно, € посторалс€ объ€снить, но € сам особо за этот метод не щарю
+
+    //нужно сделать:  привизать это всЄ к анимаци€м
     
     public float speedPlayer = 6f;//скорость
     public float speedJumpPlayer = 7f;//скорость прыжка
     public float gravity = -20f;//сила т€жести
     public float MouseSensivityPlayer = 2f;//чувствительность мыши
+
+    public float maxStamine = 100f;
+    public float regenStamine = 2f;
+    public float Stamine;
+
+    public Transform Eyes;
+    public Transform ShiftPos;
+
     
 
     private Camera PlayerCamera;//камера
@@ -16,25 +28,34 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;//главный вектор
     private bool IsGrounded; //находитс€ ли игрок на земле
     private float xRotation = 0f;//хранение поворотов игрока
+    private bool Sange;
 
     public void Start()
     {
         CharacterController = GetComponent<CharacterController>();//получаем компонент
         PlayerCamera = Camera.main;//получаем камеру
         Cursor.lockState = CursorLockMode.Locked;//скрываем курсор
+        Stamine = maxStamine;
+        PlayerCamera.transform.position = Eyes.transform.position;
+        StartCoroutine(RegenStamin());
+
     }
 
     public void Update()
     {
+
+        
+
         //гравитаци€
         if (IsGrounded && velocity.y < 0)
         {
             velocity.y = 0f; // —брасываем скорость по Y, если на земле
         }
         //прыжок, если нажат пробел и игрок на земле
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded && Stamine > 20)
         {
             velocity.y += Mathf.Sqrt(speedJumpPlayer * -2f * gravity); //мен€ем вектор по Y через вычисление квадратного корн€ из скорости и гравитации 
+            Stamine -= 20;
         }
 
 
@@ -56,6 +77,42 @@ public class PlayerController : MonoBehaviour
 
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);//вращение с помощью метода чЄтырЄх мерного вектора Ёйлера, камеры
         transform.Rotate(Vector3.up * mouseX);//вращ€ем игрока в след за камерой
+
+
+        //спринт
+        if (Input.GetKey(KeyCode.LeftShift) && Stamine >= 2 && Sange == false)
+        {
+            speedPlayer = 11f;
+            Debug.Log("»грок  бежит");          
+            Stamine -= 0.055f;
+
+            if (Stamine < 0)
+            {
+                Stamine = 0;
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) || Stamine <= 2)
+        {
+            speedPlayer = 6f;
+            Debug.Log("»грок не бежит");
+        }
+
+        //присест
+        if (Input.GetKey(KeyCode.C))
+        {
+            PlayerCamera.transform.position = ShiftPos.position;
+            speedPlayer = 3f;
+            Sange = true;
+            Debug.Log("ѕрисел");
+        }
+        else if (Input.GetKeyUp(KeyCode.C))
+        {
+            PlayerCamera.transform.position = Eyes.position;
+            speedPlayer = 6f;
+            Sange = false;
+            Debug.Log("¬стал");
+        }
+
     }
     //провер€ем касаетс€ ли игрок земли(земл€ обозначаетьс€ если на объекте есть тег Ground)
     public void OnTriggerEnter(Collider other)
@@ -74,6 +131,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    IEnumerator RegenStamin()
+    {
+        while (true)
+        {
+            if (Stamine < maxStamine)
+            {
+                Stamine += regenStamine;
+                Debug.Log(Stamine);
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+
+   
+
+    
 
 
 
