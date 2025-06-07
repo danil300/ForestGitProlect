@@ -5,6 +5,12 @@ using UnityEngine;
 public class ItemsCollect : MonoBehaviour
 {
     private bool itemComplet;//игрок находится в зоне досигаемости или нет?
+    private GameManager manager;
+
+    public void Start()
+    {
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -30,7 +36,7 @@ public class ItemsCollect : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && itemComplet)
         {
             Destroy(gameObject);//объект уничтожится
-            //+1 предмет в инвентарь
+            manager.CollectItems += 1;
             Debug.Log("Предмет собран!");
         }
     }
