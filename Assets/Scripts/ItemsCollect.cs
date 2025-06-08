@@ -6,10 +6,13 @@ public class ItemsCollect : MonoBehaviour
 {
     private bool itemComplet;//игрок находится в зоне досигаемости или нет?
     private GameManager manager;
+    private PicKup PicKup;
+    private bool InventoryIsFull;
 
     public void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        PicKup = GetComponent<PicKup>();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -33,11 +36,19 @@ public class ItemsCollect : MonoBehaviour
     public void Update()
     {
         //если игрок в зоне нажмёт E 
-        if (Input.GetKeyDown(KeyCode.E) && itemComplet)
+        if (Input.GetKeyDown(KeyCode.E) && itemComplet && InventoryIsFull == false)
         {
             Destroy(gameObject);//объект уничтожится
             manager.CollectItems += 1;
+            PicKup.CollectToInventory();
             Debug.Log("Предмет собран!");
         }
+
+        if (manager.CollectItems >= 4)
+        {
+            Debug.Log("Инвентарь пререполнен");
+            InventoryIsFull = true;
+        }
+
     }
 }
