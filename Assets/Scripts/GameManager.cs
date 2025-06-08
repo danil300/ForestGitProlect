@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,16 +16,18 @@ public class GameManager : MonoBehaviour
     public Text money;
     public Text Item;
     public Text HP;
+    public Text Stamina;
 
     private GameObject player;
     private Transform Spawn;
     private bool ShowLossHp;
+    private PlayerController controller;
 
     public void Start()
     {
         player = GameObject.Find("Player");
         Spawn = GameObject.Find("SpawnPlayer").transform;
-
+        controller = player.GetComponent<PlayerController>();
         player.transform.position = Spawn.position;
 
     }
@@ -33,12 +36,11 @@ public class GameManager : MonoBehaviour
     {
         money.text = "Монет:" + PlayerMoney;
         Item.text = "Предметов:" + CollectItems;
-        HP.text = "Здоровье" + PlayerHP;
-
+        HP.text = "HP:" + PlayerHP;
+        Stamina.text = "" + controller.Stamine;
 
         if (PlayerHP == 0f)
         {
-            player.transform.position = Spawn.position;
             ShowLossHp = true;
             Debug.Log("Игрок погиб");
             //После поражения игрока телепортирует в лобби, игрок теряет весь набранный лут, а также теряет 1 день
@@ -46,8 +48,13 @@ public class GameManager : MonoBehaviour
 
         if (ShowLossHp)
         {
-           //вызываем окно смерти
-           //рестартим уровень с этого дня, и отбираем весь лут
+            //рестартим уровень с этого дня, и отбираем весь лут
+            SceneManager.LoadScene("SampleScene");
+            //вызываем окно смерти
         }
     }
+
+    
+
+  
 }
