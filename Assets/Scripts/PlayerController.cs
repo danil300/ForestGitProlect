@@ -68,16 +68,20 @@ public class PlayerController : MonoBehaviour
         CharacterController.Move(move * speedPlayer * Time.deltaTime);//двигаем игрока
         CharacterController.Move(velocity * Time.deltaTime);//движение с учЄтом гравитации
 
-        //ввод со стороны мыши
-        float mouseX = Input.GetAxis("Mouse X") * MouseSensivityPlayer;
-        float mouseY = Input.GetAxis("Mouse Y") * MouseSensivityPlayer;
+        if (Pause.IsPause == false)
+        {
+            //ввод со стороны мыши
+            float mouseX = Input.GetAxis("Mouse X") * MouseSensivityPlayer;
+            float mouseY = Input.GetAxis("Mouse Y") * MouseSensivityPlayer;
 
-        xRotation -= mouseY; // поворот камеры вверх/вниз
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);//ограничение угла поворота камеры
+            xRotation -= mouseY; // поворот камеры вверх/вниз
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);//ограничение угла поворота камеры
 
-        PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);//вращение с помощью метода чЄтырЄх мерного вектора Ёйлера, камеры
-        transform.Rotate(Vector3.up * mouseX);//вращ€ем игрока в след за камерой
+            PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);//вращение с помощью метода чЄтырЄх мерного вектора Ёйлера, камеры
+            transform.Rotate(Vector3.up * mouseX);//вращ€ем игрока в след за камерой
 
+        }
+       
 
         //спринт
         if (Input.GetKey(KeyCode.LeftShift) && Stamine >= 2 && Sange == false)
