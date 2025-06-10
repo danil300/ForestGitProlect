@@ -11,6 +11,7 @@ public class LoadSceneButton : MonoBehaviour
     }
     public void ExitGame()
     {
-        Application.Exit();
+        Application.Quit();
+        Debug.Log("Выход");
     }
 }
