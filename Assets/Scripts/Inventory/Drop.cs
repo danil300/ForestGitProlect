@@ -6,6 +6,7 @@ public class Drop : MonoBehaviour
 {
     private Inventory inventory;
     private GameManager manager;
+    public float IndexInventory;
     public int i;
 
     public void Start()
@@ -16,6 +17,8 @@ public class Drop : MonoBehaviour
 
     public void Update()
     {
+        
+
         if (transform.childCount <= 0)
         {
             inventory.IsFull[i] = false;

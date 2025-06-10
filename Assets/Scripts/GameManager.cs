@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     public float CollectItems = 0f;
     public float PlayerMoney;
     public float PlayerOhco;
+    public float MaxKvota;
 
-    public Text money;
     public Text Item;
     public Text HP;
     public Text Stamina;
@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private Transform Spawn;
     private bool ShowLossHp;
     private PlayerController controller;
+    private int _Kvota;
 
     public void Start()
     {
@@ -34,10 +35,9 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        money.text = "Монет:" + PlayerMoney;
         Item.text = "Предметов:" + CollectItems;
         HP.text = "HP:" + PlayerHP;
-        Stamina.text = "" + controller.Stamine;
+        Stamina.text = "" + controller.Stamine;       
 
         if (PlayerHP == 0f)
         {
