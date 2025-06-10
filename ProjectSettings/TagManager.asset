@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - ForEnemyStand
+  - items
   layers:
   - Default
   - TransparentFX

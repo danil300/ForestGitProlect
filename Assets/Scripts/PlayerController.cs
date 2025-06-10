@@ -52,10 +52,10 @@ public class PlayerController : MonoBehaviour
             velocity.y = 0f; // —брасываем скорость по Y, если на земле
         }
         //прыжок, если нажат пробел и игрок на земле
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded && Stamine > 20)
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded && Stamine > 10)
         {
             velocity.y += Mathf.Sqrt(speedJumpPlayer * -2f * gravity); //мен€ем вектор по Y через вычисление квадратного корн€ из скорости и гравитации 
-            Stamine -= 20;
+            Stamine -= 10;
         }
 
 
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         //спринт
         if (Input.GetKey(KeyCode.LeftShift) && Stamine >= 2 && Sange == false)
         {
-            speedPlayer = 11f;
+            speedPlayer = 15f;
             Debug.Log("»грок  бежит");          
             Stamine -= 0.055f;
 
