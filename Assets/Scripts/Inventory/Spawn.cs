@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
+    //временно не работает
     public GameObject item;
     private Transform player;
     private Transform PlaceToDrop;
@@ -14,7 +15,7 @@ public class Spawn : MonoBehaviour
         PlaceToDrop = GameObject.Find("PlaceToDrop").transform;
     }
 
-    public void SpawnDroppedItem()
+    public  void SpawnDroppedItem()
     {
         Instantiate(item, PlaceToDrop.transform.position, Quaternion.identity);
     }

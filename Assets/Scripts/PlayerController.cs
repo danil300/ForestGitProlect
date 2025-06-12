@@ -142,7 +142,6 @@ public class PlayerController : MonoBehaviour
             if (Stamine < maxStamine)
             {
                 Stamine += regenStamine;
-                Debug.Log(Stamine);
                 yield return new WaitForSeconds(1f);
             }
             else

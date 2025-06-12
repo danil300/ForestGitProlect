@@ -41,7 +41,8 @@ public class Pause : MonoBehaviour
     {
         IsPause = false;
         PauseMenu.SetActive(false);
-        Time.timeScale = 1f;        
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void ExitAtMenu()

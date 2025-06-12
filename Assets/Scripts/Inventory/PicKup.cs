@@ -6,6 +6,7 @@ public class PicKup : MonoBehaviour
 {
     private Inventory inventory;
     public GameObject slotButton;
+    private GameObject image;
 
     public void Start()
     {
@@ -19,7 +20,8 @@ public class PicKup : MonoBehaviour
             if (inventory.IsFull[i] == false)
             {
                 inventory.IsFull[i] = true;
-                Instantiate(slotButton, inventory.slots[i].transform);
+                image = Instantiate(slotButton, inventory.slots[i].transform);
+                Drop.ItemIconka.Add(image);
                 break;
             }
         }
