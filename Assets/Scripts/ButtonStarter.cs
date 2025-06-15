@@ -6,10 +6,13 @@ public class ButtonStarter : MonoBehaviour
 {
     private bool PlayerInZone;
     private GameObject Doors;
+    private bool StartGame;
+    private GameManager manager;
 
     public void Start()
     {
         Doors = GameObject.Find("Doors");
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -30,13 +33,24 @@ public class ButtonStarter : MonoBehaviour
 
     public void Update()
     {
-        if (PlayerInZone && Input.GetKey(KeyCode.E))
+        if (PlayerInZone == true && Input.GetKeyDown(KeyCode.E) && StartGame == false)
         {
-            Destroy(Doors);
+            Doors.SetActive(false);
+            StartGame = true;
             Debug.Log("Игра Началась");       
         }
-            
+        else if (PlayerInZone == true && Input.GetKeyDown(KeyCode.E) && StartGame == true)
+        {
+            FinishGame();
+        }                       
+    }
 
-        
+    public void FinishGame()
+    {
+        StartGame = false;
+        Doors.SetActive(true);
+        manager.Day += 1;
+        manager.ResultDay();
+        Debug.Log("Игра окончена");
     }
 }
