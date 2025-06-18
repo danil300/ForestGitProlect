@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public Transform Eyes;
     public Transform ShiftPos;
 
-    
+    public Animator anim;
 
     private Camera PlayerCamera;//камера
     private CharacterController CharacterController;//компонент
@@ -30,13 +30,17 @@ public class PlayerController : MonoBehaviour
     private float xRotation = 0f;//хранение поворотов игрока
     private bool Sange;
 
+    private Transform cameraPos;
+    
+
     public void Start()
     {
         CharacterController = GetComponent<CharacterController>();//получаем компонент
         PlayerCamera = Camera.main;//получаем камеру
+        cameraPos = GameObject.Find("View").transform;
         Cursor.lockState = CursorLockMode.Locked;//скрываем курсор
         Stamine = maxStamine;
-        PlayerCamera.transform.position = Eyes.transform.position;
+        cameraPos.position = Eyes.transform.position;
         StartCoroutine(RegenStamin());
 
     }
@@ -44,7 +48,7 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
 
-        
+      
 
         //гравитаци€
         if (IsGrounded && velocity.y < 0)
@@ -67,6 +71,15 @@ public class PlayerController : MonoBehaviour
 
         CharacterController.Move(move * speedPlayer * Time.deltaTime);//двигаем игрока
         CharacterController.Move(velocity * Time.deltaTime);//движение с учЄтом гравитации
+
+        if (moveX > 0 || moveZ > 0 || moveX < 0 || moveZ < 0)
+        {
+            anim.SetBool("motion", true);
+        }
+        else if (moveX == 0 || moveZ == 0)
+        {
+            anim.SetBool("motion", false);
+        }
 
         if (Pause.IsPause == false)
         {
@@ -104,14 +117,14 @@ public class PlayerController : MonoBehaviour
         //присест
         if (Input.GetKey(KeyCode.C))
         {
-            PlayerCamera.transform.position = ShiftPos.position;
+            cameraPos.position = ShiftPos.position;
             speedPlayer = 3f;
             Sange = true;
             Debug.Log("ѕрисел");
         }
         else if (Input.GetKeyUp(KeyCode.C))
         {
-            PlayerCamera.transform.position = Eyes.position;
+            cameraPos.position = Eyes.position;
             speedPlayer = 6f;
             Sange = false;
             Debug.Log("¬стал");

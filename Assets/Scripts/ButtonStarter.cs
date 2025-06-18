@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ButtonStarter : MonoBehaviour
 {
-    private bool PlayerInZone;
     private GameObject Doors;
     private bool StartGame;
     private GameManager manager;
@@ -15,34 +14,17 @@ public class ButtonStarter : MonoBehaviour
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void SterterGame()
     {
-        if (other.gameObject.name == "Player")
-        {
-            PlayerInZone = true;
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name == "Player")
-        {
-            PlayerInZone = false;
-        }
-    }
-
-    public void Update()
-    {
-        if (PlayerInZone == true && Input.GetKeyDown(KeyCode.E) && StartGame == false)
+        if (StartGame == false)
         {
             Doors.SetActive(false);
             StartGame = true;
-            Debug.Log("Игра Началась");       
         }
-        else if (PlayerInZone == true && Input.GetKeyDown(KeyCode.E) && StartGame == true)
+        else
         {
             FinishGame();
-        }                       
+        }
     }
 
     public void FinishGame()
