@@ -54,6 +54,7 @@ public class ItemPicKup : MonoBehaviour
                 Destroy(hit.collider.gameObject);
                 manager.CollectItems += 1;
                 manager.MaxCollectItems += 1;
+                manager.MaxCollectItemsDays += 1;
                 buttonEToItems.SetActive(false);
             }          
         }

@@ -101,7 +101,8 @@ public class PlayerController : MonoBehaviour
         {
             speedPlayer = 15f;
             Debug.Log("Игрок  бежит");          
-            Stamine -= 0.055f;
+            Stamine -= 0.3f;
+            regenStamine = 0;
 
             if (Stamine < 0)
             {
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour
         {
             speedPlayer = 6f;
             Debug.Log("Игрок не бежит");
+            regenStamine = 2;
         }
 
         //присест

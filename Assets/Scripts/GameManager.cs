@@ -148,6 +148,8 @@ public class GameManager : MonoBehaviour
     {
         float salary = PlayerOhco / 100;
 
+        float Y = MaxCollectItemsDays -= 1;
+
         float a = 4f;
         float leftDay = a -= Day;
         ResultDayWindow.SetActive(true);
@@ -156,7 +158,7 @@ public class GameManager : MonoBehaviour
 
         PlayerMoney += salary;
         ResultDays.text = "Дней осталось:" + " " + leftDay;
-        ResultDayItems.text = "Предметов собрано:" + " " + MaxCollectItemsDays;
+        ResultDayItems.text = "Предметов собрано:" + " " + Y;
         ResultDayKvota.text = "Квота:" + " " + PlayerMoney + "/" + MaxKvota;
         ResultDayMoneys.text = "Зарплата:" + " " + salary;
         ResultDayOhci.text = "получено очков:" + " " + PlayerOhco;
