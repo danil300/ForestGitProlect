@@ -8,6 +8,8 @@ public class ButtonStarter : MonoBehaviour
     private bool StartGame;
     private GameManager manager;
 
+    public Animator doorsAnim;
+
     public void Start()
     {
         Doors = GameObject.Find("Doors");
@@ -18,7 +20,7 @@ public class ButtonStarter : MonoBehaviour
     {
         if (StartGame == false)
         {
-            Doors.SetActive(false);
+            doorsAnim.SetBool("Start", true);
             StartGame = true;
         }
         else
@@ -30,7 +32,7 @@ public class ButtonStarter : MonoBehaviour
     public void FinishGame()
     {
         StartGame = false;
-        Doors.SetActive(true);
+        doorsAnim.SetBool("Start", false);
         manager.Day += 1;
         manager.ResultDay();
         Debug.Log("Игра окончена");
