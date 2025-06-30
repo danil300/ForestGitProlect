@@ -16,12 +16,19 @@ public class ItemPicKup : MonoBehaviour
     private bool InventoryIsFull = false;
     private ButtonStarter buttonStarter;
 
+    public Items[] AllItemsOnScene;
+
+    private string Object;
+    public Invnetory invent;
+
     public void Start()
     {
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         buttonStarter = GameObject.Find("Button").GetComponent<ButtonStarter>();
         buttonEToItems.SetActive(false);
         buttonEToButtonsStart.SetActive(false);
+
+        invent = GetComponent<Invnetory>();
     }
 
     public void Update()
@@ -50,12 +57,27 @@ public class ItemPicKup : MonoBehaviour
             buttonEToItems.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E) && InventoryIsFull == false)
             {
-                Debug.Log("Подоброн предмет");
                 Destroy(hit.collider.gameObject);
                 manager.CollectItems += 1;
                 manager.MaxCollectItems += 1;
                 manager.MaxCollectItemsDays += 1;
                 buttonEToItems.SetActive(false);
+
+                Object = hit.collider.gameObject.name;
+                Debug.Log("Подоброн предмет:" + " " + Object);
+
+                for (int i = 0; i < AllItemsOnScene.Length; i++)
+                {
+                    if (Object == AllItemsOnScene[i].NameItem)
+                    {
+                        invent.Adds(i);
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log("Такой предмет не найден");
+                    }
+                }
             }          
         }
         else
